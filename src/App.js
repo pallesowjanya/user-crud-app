@@ -1,24 +1,29 @@
-import logo from './logo.svg';
+// src/App.js
+import React, { useState } from 'react';
+import { UserProvider } from './UserContext';
+import UserList from './UserList';
+import UserForm from './UserForm';
 import './App.css';
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const handleEdit = (user) => {
+    setCurrentUser(user);
+  };
+
+  const handleClear = () => {
+    setCurrentUser(null);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserProvider>
+      <div className="container">
+        <h1>User Management</h1>
+        <UserForm currentUser={currentUser} onClear={handleClear} />
+        <UserList onEdit={handleEdit} />
+      </div>
+    </UserProvider>
   );
 }
 
